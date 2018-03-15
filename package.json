@@ -1,0 +1,18 @@
+{
+  "name": "ariel",
+  "version": "0.1.0",
+  "description": "Create diagrams from text in a similar manner as markdown",
+  "license": "MIT",
+  "scripts": {
+    "upgrade": "yarn-upgrade-all",
+    "test": "node index.js"
+  },
+  "dependencies": {
+    "d3": "^4.13.0",
+    "dagre-layout": "^0.8.6"
+  },
+  "devDependencies": {
+    "standard": "^11.0.1",
+    "yarn-upgrade-all": "^0.3.0"
+  }
+}
