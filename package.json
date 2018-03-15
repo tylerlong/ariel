@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "d3": "^4.13.0",
-    "dagre-layout": "^0.8.6"
+    "dagre-layout": "^0.8.6",
+    "jsdom": "^11.6.2"
   },
   "devDependencies": {
     "standard": "^11.0.1",
