@@ -42,9 +42,11 @@ const drawEdge = (g, points) => {
   for (let i = 0; i < points.length - 1; i++) {
     const point1 = points[i]
     const point2 = points[i + 1]
-    g.append('line').attr('x1', point1.x).attr('y1', point1.y)
-      .attr('x2', point2.x).attr('y2', point2.y)
-      .attr('stroke', 'black')
+    const line = g.append('line').attr('x1', point1.x).attr('y1', point1.y)
+      .attr('x2', point2.x).attr('y2', point2.y).attr('stroke', 'black')
+    if (i === points.length - 2) {
+      line.attr('marker-end', 'url(#arrowhead)')
+    }
   }
 }
 
