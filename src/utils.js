@@ -8,11 +8,26 @@ const charWidth = c => {
   return isFullwidthCodePoint(c.codePointAt()) ? cjkCharWidth : asciiCharWidth
 }
 
-const createBody = () => {
+const init = () => {
   const { JSDOM } = jsdom
   const jsDom = new JSDOM(`<!DOCTYPE html><html><body></body></html>`)
   const body = d3.select(jsDom.window.document).select('body')
-  return body
+  const svg = body.append('svg').attr('xmlns', 'http://www.w3.org/2000/svg')
+    .attr('width', 1500).attr('height', 500)
+  svg.append('defs').append('marker')
+    .attr('id', 'arrowhead')
+    .attr('viewBox', '-0 -5 10 10')
+    .attr('refX', 13)
+    .attr('refY', 0)
+    .attr('orient', 'auto')
+    .attr('markerWidth', 13)
+    .attr('markerHeight', 13)
+    .attr('xoverflow', 'visible')
+    .append('svg:path')
+    .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
+    .attr('fill', 'black')
+    .style('stroke', 'none')
+  return { body, svg }
 }
 
 const rectSize = text => {
@@ -52,7 +67,7 @@ const drawEdge = (g, points) => {
 
 module.exports = {
   charWidth,
-  createBody,
+  init,
   rectSize,
   drawTextRect,
   drawEdge

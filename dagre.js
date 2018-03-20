@@ -2,7 +2,7 @@ const dagre = require('dagre-layout').default
 const graphlib = require('graphlibrary')
 const fs = require('fs')
 
-const { rectSize, createBody, drawTextRect, drawEdge } = require('./src/utils')
+const { rectSize, init, drawTextRect, drawEdge } = require('./src/utils')
 
 // Create a new directed graph
 const graph = new graphlib.Graph()
@@ -32,22 +32,7 @@ graph.setEdge('lwilson', 'kbacon')
 
 dagre.layout(graph)
 
-const body = createBody()
-const svg = body.append('svg').attr('xmlns', 'http://www.w3.org/2000/svg')
-  .attr('width', 1500).attr('height', 500)
-svg.append('defs').append('marker')
-  .attr('id', 'arrowhead')
-  .attr('viewBox', '-0 -5 10 10')
-  .attr('refX', 13)
-  .attr('refY', 0)
-  .attr('orient', 'auto')
-  .attr('markerWidth', 13)
-  .attr('markerHeight', 13)
-  .attr('xoverflow', 'visible')
-  .append('svg:path')
-  .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
-  .attr('fill', '#999')
-  .style('stroke', 'none')
+const { body, svg } = init()
 
 const g = svg.append('g')
 
