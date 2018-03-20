@@ -25,22 +25,33 @@ const rectSize = text => {
 
 const drawTextRect = (g, text, x, y) => {
   const size = rectSize(text)
-  g.append('rect').attr('x', x).attr('y', x)
+  g.append('rect').attr('x', x).attr('y', y)
     .attr('width', size.width).attr('height', size.height)
     .attr('fill', 'white').attr('stroke', 'black')
 
   g.append('text')
     .attr('x', x)
-    .attr('y', x + textY)
+    .attr('y', y + textY)
     .attr('font-family', fontFamily)
     .attr('font-size', fontSize)
     .attr('line-height', lineHeight)
     .text(text)
 }
 
+const drawEdge = (g, points) => {
+  for (let i = 0; i < points.length - 1; i++) {
+    const point1 = points[i]
+    const point2 = points[i + 1]
+    g.append('line').attr('x1', point1.x).attr('y1', point1.y)
+      .attr('x2', point2.x).attr('y2', point2.y)
+      .attr('stroke', 'black')
+  }
+}
+
 module.exports = {
   charWidth,
   createBody,
   rectSize,
-  drawTextRect
+  drawTextRect,
+  drawEdge
 }

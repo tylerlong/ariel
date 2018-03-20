@@ -501,9 +501,9 @@ d3@^4.13.0:
     d3-voronoi "1.1.2"
     d3-zoom "1.7.1"
 
-dagre-layout@^0.8.6:
-  version "0.8.6"
-  resolved "https://registry.yarnpkg.com/dagre-layout/-/dagre-layout-0.8.6.tgz#2c41ed2ed22db7bcded7fedfe420a63c060187c5"
+dagre-layout@^0.8.7:
+  version "0.8.7"
+  resolved "https://registry.yarnpkg.com/dagre-layout/-/dagre-layout-0.8.7.tgz#f97e083c1a486d6161f4b14c3bef723b2a7cc03d"
   dependencies:
     graphlibrary "^2.2.0"
     lodash "^4.17.5"
