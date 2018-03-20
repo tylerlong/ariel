@@ -5,10 +5,10 @@ const { textY, fontFamily, fontSize, lineHeight } = require('./src/constants')
 
 const body = createBody()
 const svg = body.append('svg').attr('xmlns', 'http://www.w3.org/2000/svg')
-  .attr('width', 1000).attr('height', 500)
+  .attr('width', 1500).attr('height', 500)
 const g = svg.append('g')
 
-const text = '<I am a pretty rectangle! 中华人民共和国万岁！人生如梦，一樽还酹江月。Browse the commercial free fonts classified as monospaced.>'
+const text = '<jeep did Google is grea! 快讯：习近平在十三届全国人大一次会议上发表重要讲话。 Browse the commercial free fonts classified as monospaced.>'
 
 const size = rectSize(text)
 g.append('rect').attr('x', 0).attr('y', 0)
