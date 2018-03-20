@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-const { rectSize, createBody } = require('./src/index')
+const { rectSize, createBody } = require('./src/utils')
 const { textY, fontFamily, fontSize, lineHeight } = require('./src/constants')
 
 const body = createBody()
