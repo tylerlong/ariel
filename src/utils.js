@@ -1,8 +1,6 @@
 const jsdom = require('jsdom')
 const d3 = require('d3')
 
-const { lineHeight, rectWidth, rectHeight } = require('./constants')
-
 const init = () => {
   const { JSDOM } = jsdom
   const jsDom = new JSDOM(`<!DOCTYPE html><html><body></body></html>`)
@@ -26,9 +24,9 @@ const init = () => {
   return { body, svg }
 }
 
-const drawTextRect = (g, text, x, y) => {
-  const svg = g.append('svg').attr('x', x).attr('y', y).attr('width', rectWidth).attr('height', rectHeight)
-  svg.append('rect').attr('x', 0).attr('y', 0).attr('width', rectWidth).attr('height', rectHeight).attr('fill', 'white').attr('stroke', 'black')
+const drawTextRect = (g, text, x, y, width, height) => {
+  const svg = g.append('svg').attr('x', x).attr('y', y).attr('width', width).attr('height', height)
+  svg.append('rect').attr('x', 0).attr('y', 0).attr('width', width).attr('height', height).attr('fill', 'white').attr('stroke', 'black')
   const textElement = svg.append('text').attr('x', '50%').attr('y', '50%').attr('fill', 'black').attr('text-anchor', 'middle')
   textElement.append('tspan').attr('x', '50%').attr('y', '50%').attr('alignment-baseline', 'central').text(text)
 }

@@ -6,10 +6,12 @@ const { init, drawTextRect, drawEdge } = require('./src/utils')
 const { rectWidth, rectHeight, padding } = require('./src/constants')
 
 // Create a new directed graph
-const graph = new graphlib.Graph()
+const graph = new graphlib.Graph({ compound: true })
 
 // Set an object for the graph label
-graph.setGraph({rankdir: 'TB'})
+graph.setGraph({
+  rankdir: 'TB'
+})
 
 // Default to assigning a new object as a label for each new edge.
 graph.setDefaultEdgeLabel(function () { return {} })
@@ -31,6 +33,7 @@ graph.setNode('C', { label: 'C', width: rectWidth, height: rectHeight })
 graph.setNode('Z', { label: 'Z', width: rectWidth, height: rectHeight })
 graph.setNode('Y', { label: 'Y', width: rectWidth, height: rectHeight })
 // graph.setNode('kbacon', { label: 'Kevin Bacon', width: rectWidth, height: rectHeight })
+graph.setNode('group', { label: 'Group' })
 
 // Add edges to the graph.
 graph.setEdge('A', 'B')
@@ -40,6 +43,11 @@ graph.setEdge('A', 'Y')
 graph.setEdge('B', 'Y')
 graph.setEdge('Z', 'Y')
 graph.setEdge('Y', 'A')
+
+graph.setParent('A', 'group')
+graph.setParent('B', 'group')
+graph.setParent('C', 'group')
+graph.setParent('Y', 'group')
 
 dagre.layout(graph)
 
@@ -52,13 +60,15 @@ let minY = 1000
 let maxX = -1000
 let maxY = -1000
 
-graph.nodes().forEach(n => {
-  const node = graph.node(n)
+const nodes = graph.nodes().map(n => graph.node(n))
+nodes.sort((a, b) => b.width * b.height - a.width * a.height)
+nodes.forEach(node => {
+  // const node = graph.node(n)
   minX = Math.min(minX, node.x - node.width / 2.0)
   minY = Math.min(minY, node.y - node.height / 2.0)
   maxX = Math.max(maxX, node.x + node.width / 2.0)
   maxY = Math.max(maxY, node.y + node.height / 2.0)
-  drawTextRect(g, node.label, node.x - node.width / 2.0, node.y - node.height / 2.0)
+  drawTextRect(g, node.label, node.x - node.width / 2.0, node.y - node.height / 2.0, node.width, node.height)
 })
 
 graph.edges().forEach(e => {
