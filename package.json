@@ -8,8 +8,8 @@
     "test": "node index.js"
   },
   "dependencies": {
-    "d3": "^4.13.0",
-    "dagre-layout": "^0.8.7",
+    "d3": "^5.0.0",
+    "dagre-layout": "^0.8.8",
     "graphlibrary": "^2.2.0",
     "is-fullwidth-code-point": "^2.0.0",
     "jsdom": "^11.6.2"
