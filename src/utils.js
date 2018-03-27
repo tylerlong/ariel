@@ -1,12 +1,7 @@
-const isFullwidthCodePoint = require('is-fullwidth-code-point')
 const jsdom = require('jsdom')
 const d3 = require('d3')
 
-const { asciiCharWidth, cjkCharWidth, charHeight, textY, fontFamily, fontSize, lineHeight } = require('./constants')
-
-const charWidth = c => {
-  return isFullwidthCodePoint(c.codePointAt()) ? cjkCharWidth : asciiCharWidth
-}
+const { lineHeight, rectWidth, rectHeight } = require('./constants')
 
 const init = () => {
   const { JSDOM } = jsdom
@@ -31,27 +26,11 @@ const init = () => {
   return { body, svg }
 }
 
-const rectSize = text => {
-  const textWidth = text.split('')
-    .map(char => charWidth(char))
-    .reduce(function (a, b) { return a + b }, 0)
-  const padding = 0
-  return { width: textWidth + padding * 2, height: charHeight + padding * 2 }
-}
-
 const drawTextRect = (g, text, x, y) => {
-  const size = rectSize(text)
-  g.append('rect').attr('x', x).attr('y', y)
-    .attr('width', size.width).attr('height', size.height)
-    .attr('fill', 'white').attr('stroke', 'black')
-
-  g.append('text')
-    .attr('x', x)
-    .attr('y', y + textY)
-    .attr('font-family', fontFamily)
-    .attr('font-size', fontSize)
-    .attr('line-height', lineHeight)
-    .text(text)
+  const svg = g.append('svg').attr('x', x).attr('y', y).attr('width', rectWidth).attr('height', rectHeight)
+  svg.append('rect').attr('x', 0).attr('y', 0).attr('width', rectWidth).attr('height', rectHeight).attr('fill', 'white').attr('stroke', 'black')
+  const textElement = svg.append('text').attr('x', '50%').attr('y', '50%').attr('fill', 'black').attr('text-anchor', 'middle')
+  textElement.append('tspan').attr('x', '50%').attr('y', '50%').attr('alignment-baseline', 'central').text(text)
 }
 
 const drawEdge = (g, points) => {
@@ -67,9 +46,7 @@ const drawEdge = (g, points) => {
 }
 
 module.exports = {
-  charWidth,
   init,
-  rectSize,
   drawTextRect,
   drawEdge
 }

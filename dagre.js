@@ -2,7 +2,8 @@ const dagre = require('dagre-layout').default
 const graphlib = require('graphlibrary')
 const fs = require('fs')
 
-const { rectSize, init, drawTextRect, drawEdge } = require('./src/utils')
+const { init, drawTextRect, drawEdge } = require('./src/utils')
+const { rectWidth, rectHeight } = require('./src/constants')
 
 // Create a new directed graph
 const graph = new graphlib.Graph()
@@ -16,12 +17,12 @@ graph.setDefaultEdgeLabel(function () { return {} })
 // Add nodes to the graph. The first argument is the node id. The second is
 // metadata about the node. In this case we're going to add labels to each of
 // our nodes.
-graph.setNode('kspacey', { label: 'Kevin Spacey', ...rectSize('Kevin Spacey') })
-graph.setNode('swilliams', { label: 'Saul Williams', ...rectSize('Saul Williams') })
-graph.setNode('bpitt', { label: 'Brad Pitt', ...rectSize('Brad Pitt') })
-graph.setNode('hford', { label: 'Harrison Ford', ...rectSize('Harrison Ford') })
-graph.setNode('lwilson', { label: 'Luke Wilson', ...rectSize('Luke Wilson') })
-graph.setNode('kbacon', { label: 'Kevin Bacon', ...rectSize('Kevin Bacon') })
+graph.setNode('kspacey', { label: 'Kevin Spacey', width: rectWidth, height: rectHeight })
+graph.setNode('swilliams', { label: 'Saul Williams', width: rectWidth, height: rectHeight })
+graph.setNode('bpitt', { label: 'Brad 👨‍👨‍👧 🌺 Pitt', width: rectWidth, height: rectHeight })
+graph.setNode('hford', { label: 'Harrison Ford', width: rectWidth, height: rectHeight })
+graph.setNode('lwilson', { label: 'Luke Wilson', width: rectWidth, height: rectHeight })
+graph.setNode('kbacon', { label: 'Kevin Bacon', width: rectWidth, height: rectHeight })
 
 // Add edges to the graph.
 graph.setEdge('kspacey', 'swilliams')
