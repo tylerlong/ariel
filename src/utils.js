@@ -24,9 +24,13 @@ const init = () => {
   return { body, svg }
 }
 
-const drawTextRect = (g, text, x, y, width, height) => {
-  const svg = g.append('svg').attr('x', x).attr('y', y).attr('width', width).attr('height', height)
-  svg.append('rect').attr('x', 0).attr('y', 0).attr('width', width).attr('height', height).attr('fill', 'white').attr('stroke', 'black')
+const drawRect = (g, x, y, w, h) => {
+  g.append('rect').attr('x', x).attr('y', y).attr('width', w).attr('height', h).attr('fill', 'white').attr('stroke', 'black').attr('stroke-width', 2)
+}
+
+const drawTextRect = (g, text, x, y, w, h) => {
+  const svg = g.append('svg').attr('x', x).attr('y', y).attr('width', w).attr('height', h)
+  drawRect(svg, 0, 0, w, h)
   const textElement = svg.append('text').attr('x', '50%').attr('y', '50%').attr('fill', 'black').attr('text-anchor', 'middle')
   textElement.append('tspan').attr('x', '50%').attr('y', '50%').attr('alignment-baseline', 'central').text(text)
 }
