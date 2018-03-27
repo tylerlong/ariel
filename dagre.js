@@ -2,7 +2,7 @@ const dagre = require('dagre-layout').default
 const graphlib = require('graphlibrary')
 const fs = require('fs')
 
-const { init, drawTextRect, drawEdge } = require('./src/utils')
+const { init, drawNode, drawEdge } = require('./src/utils')
 const { rectWidth, rectHeight, padding } = require('./src/constants')
 
 // Create a new directed graph
@@ -27,7 +27,7 @@ graph.setDefaultEdgeLabel(function () { return {} })
 // Add nodes to the graph. The first argument is the node id. The second is
 // metadata about the node. In this case we're going to add labels to each of
 // our nodes.
-graph.setNode('A', { label: 'A', width: rectWidth, height: rectHeight })
+graph.setNode('A', { label: 'A', width: rectWidth, height: rectHeight, shape: 'circle' })
 graph.setNode('B', { label: 'B', width: rectWidth, height: rectHeight })
 graph.setNode('C', { label: 'C', width: rectWidth, height: rectHeight })
 graph.setNode('Z', { label: 'Z', width: rectWidth, height: rectHeight })
@@ -67,7 +67,7 @@ nodes.forEach(node => {
   minY = Math.min(minY, node.y - node.height / 2.0)
   maxX = Math.max(maxX, node.x + node.width / 2.0)
   maxY = Math.max(maxY, node.y + node.height / 2.0)
-  drawTextRect(g, node.label, node.x - node.width / 2.0, node.y - node.height / 2.0, node.width, node.height)
+  drawNode(g, node)
 })
 
 graph.edges().forEach(e => {

@@ -28,11 +28,25 @@ const drawRect = (g, x, y, w, h) => {
   g.append('rect').attr('x', x).attr('y', y).attr('width', w).attr('height', h).attr('fill', 'white').attr('stroke', 'black').attr('stroke-width', 2)
 }
 
-const drawTextRect = (g, text, x, y, w, h) => {
+const drawCircle = (g, cx, cy, r) => {
+  g.append('circle').attr('cx', cx).attr('cy', cy).attr('r', r).attr('fill', 'white').attr('stroke', 'black').attr('stroke-width', 2)
+}
+
+const drawNode = (g, node) => {
+  const x = node.x - node.width / 2.0
+  const y = node.y - node.height / 2.0
+  const w = node.width
+  const h = node.height
   const svg = g.append('svg').attr('x', x).attr('y', y).attr('width', w).attr('height', h)
-  drawRect(svg, 0, 0, w, h)
-  const textElement = svg.append('text').attr('x', '50%').attr('y', '50%').attr('fill', 'black').attr('text-anchor', 'middle')
-  textElement.append('tspan').attr('x', '50%').attr('y', '50%').attr('alignment-baseline', 'central').text(text)
+  if (node.shape === 'rect' || node.shape === undefined) {
+    drawRect(svg, 0, 0, w, h)
+  } else if (node.shape === 'circle') {
+    const r = Math.min(node.width, node.height) / 2.0
+    drawCircle(svg, node.width / 2.0, node.height / 2.0, r)
+  }
+
+  const text = svg.append('text').attr('x', '50%').attr('y', '50%').attr('fill', 'black').attr('text-anchor', 'middle').attr('dominant-baseline', 'central')
+  text.append('tspan').attr('x', '50%').attr('y', '50%').attr('alignment-baseline', 'central').text(node.label)
 }
 
 const drawEdge = (g, points) => {
@@ -49,6 +63,6 @@ const drawEdge = (g, points) => {
 
 module.exports = {
   init,
-  drawTextRect,
+  drawNode,
   drawEdge
 }
