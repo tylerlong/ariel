@@ -61,8 +61,79 @@ const drawEdge = (g, points) => {
   }
 }
 
+const intersect = (node, point) => {
+  switch (node.shape) {
+    case 'circle':
+      console.log('circle')
+      return intersectCircle(node, point)
+    default:
+      console.log('rect')
+      return intersectRect(node, point)
+  }
+}
+
+const intersectCircle = (node, point) => {
+  const r = Math.min(node.width, node.height) / 2.0
+  return intersectEllipse(node, r, r, point)
+}
+
+const intersectEllipse = (node, rx, ry, point) => {
+  // Formulae from: http://mathworld.wolfram.com/Ellipse-LineIntersection.html
+
+  var cx = node.x
+  var cy = node.y
+
+  var px = cx - point.x
+  var py = cy - point.y
+
+  var det = Math.sqrt(rx * rx * py * py + ry * ry * px * px)
+
+  var dx = Math.abs(rx * ry * px / det)
+  if (point.x < cx) {
+    dx = -dx
+  }
+  var dy = Math.abs(rx * ry * py / det)
+  if (point.y < cy) {
+    dy = -dy
+  }
+
+  return {x: cx + dx, y: cy + dy}
+}
+
+const intersectRect = (node, point) => {
+  var x = node.x
+  var y = node.y
+
+  // Rectangle intersection algorithm from:
+  // http://math.stackexchange.com/questions/108113/find-edge-between-two-boxes
+  var dx = point.x - x
+  var dy = point.y - y
+  var w = node.width / 2
+  var h = node.height / 2
+
+  var sx, sy
+  if (Math.abs(dy) * w > Math.abs(dx) * h) {
+    // Intersection is top or bottom of rect.
+    if (dy < 0) {
+      h = -h
+    }
+    sx = dy === 0 ? 0 : h * dx / dy
+    sy = h
+  } else {
+    // Intersection is left or right of rect.
+    if (dx < 0) {
+      w = -w
+    }
+    sx = w
+    sy = dx === 0 ? 0 : w * dy / dx
+  }
+
+  return {x: x + sx, y: y + sy}
+}
+
 module.exports = {
   init,
   drawNode,
-  drawEdge
+  drawEdge,
+  intersect
 }

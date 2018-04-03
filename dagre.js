@@ -2,7 +2,7 @@ const dagre = require('dagre-layout').default
 const graphlib = require('graphlibrary')
 const fs = require('fs')
 
-const { init, drawNode, drawEdge } = require('./src/utils')
+const { init, drawNode, drawEdge, intersect } = require('./src/utils')
 const { rectWidth, rectHeight, padding } = require('./src/constants')
 
 // Create a new directed graph
@@ -29,7 +29,7 @@ graph.setDefaultEdgeLabel(function () { return {} })
 // our nodes.
 graph.setNode('A', { label: 'A', width: rectWidth, height: rectHeight, shape: 'circle' })
 graph.setNode('B', { label: 'B', width: rectWidth, height: rectHeight })
-graph.setNode('C', { label: 'C', width: rectWidth, height: rectHeight })
+graph.setNode('C', { label: 'C', width: rectWidth, height: rectHeight, shape: 'circle' })
 graph.setNode('Z', { label: 'Z', width: rectWidth, height: rectHeight })
 graph.setNode('Y', { label: 'Y', width: rectWidth, height: rectHeight })
 // graph.setNode('kbacon', { label: 'Kevin Bacon', width: rectWidth, height: rectHeight })
@@ -72,14 +72,21 @@ nodes.forEach(node => {
 
 graph.edges().forEach(e => {
   const edge = graph.edge(e)
-  for (let i = 0; i < edge.points.length; i++) {
-    const point = edge.points[i]
+
+  // intersect
+  const points = edge.points.slice(1, edge.points.length - 1)
+  console.log(graph.node(e.v))
+  points.unshift(intersect(graph.node(e.v), points[0]))
+  points.push(intersect(graph.node(e.w), points[points.length - 1]))
+
+  for (let i = 0; i < points.length; i++) {
+    const point = points[i]
     minX = Math.min(minX, point.x)
     minY = Math.min(minY, point.y)
     maxX = Math.max(maxX, point.x)
     maxY = Math.max(maxY, point.y)
   }
-  drawEdge(g, edge.points)
+  drawEdge(g, points)
 })
 
 console.log(minX, minY, maxX, maxY)
