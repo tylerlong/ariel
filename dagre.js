@@ -31,7 +31,7 @@ graph.setNode('A', { label: 'A', width: rectWidth, height: rectHeight, shape: 'c
 graph.setNode('B', { label: 'B', width: rectWidth, height: rectHeight })
 graph.setNode('C', { label: 'C', width: rectWidth, height: rectHeight, shape: 'circle' })
 graph.setNode('Z', { label: 'Z', width: rectWidth, height: rectHeight })
-graph.setNode('Y', { label: 'Y', width: rectWidth, height: rectHeight })
+graph.setNode('Y', { label: 'Y', width: rectWidth, height: rectHeight, shape: 'ellipse' })
 // graph.setNode('kbacon', { label: 'Kevin Bacon', width: rectWidth, height: rectHeight })
 graph.setNode('group', { label: 'Group' })
 
@@ -75,7 +75,6 @@ graph.edges().forEach(e => {
 
   // intersect
   const points = edge.points.slice(1, edge.points.length - 1)
-  console.log(graph.node(e.v))
   points.unshift(intersect(graph.node(e.v), points[0]))
   points.push(intersect(graph.node(e.w), points[points.length - 1]))
 
@@ -88,8 +87,6 @@ graph.edges().forEach(e => {
   }
   drawEdge(g, points)
 })
-
-console.log(minX, minY, maxX, maxY)
 
 svg.attr('width', maxX - minX + padding * 2).attr('height', maxY - minY + padding * 2)
 g.attr('transform', `translate(${padding - minX}, ${padding - minY})`)

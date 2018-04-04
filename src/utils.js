@@ -32,6 +32,10 @@ const drawCircle = (g, cx, cy, r) => {
   g.append('circle').attr('cx', cx).attr('cy', cy).attr('r', r).attr('fill', 'white').attr('stroke', 'black').attr('stroke-width', 2)
 }
 
+const drawEllipse = (g, cx, cy, rx, ry) => {
+  g.append('ellipse').attr('cx', cx).attr('cy', cy).attr('rx', rx).attr('ry', ry).attr('fill', 'white').attr('stroke', 'black').attr('stroke-width', 2)
+}
+
 const drawNode = (g, node) => {
   const x = node.x - node.width / 2.0
   const y = node.y - node.height / 2.0
@@ -43,6 +47,8 @@ const drawNode = (g, node) => {
   } else if (node.shape === 'circle') {
     const r = Math.min(node.width, node.height) / 2.0
     drawCircle(svg, node.width / 2.0, node.height / 2.0, r)
+  } else if (node.shape === 'ellipse') {
+    drawEllipse(svg, node.width / 2.0, node.height / 2.0, node.width / 2.0, node.height / 2.0)
   }
 
   const text = svg.append('text').attr('x', '50%').attr('y', '50%').attr('fill', 'black').attr('text-anchor', 'middle').attr('dominant-baseline', 'central')
@@ -64,10 +70,10 @@ const drawEdge = (g, points) => {
 const intersect = (node, point) => {
   switch (node.shape) {
     case 'circle':
-      console.log('circle')
       return intersectCircle(node, point)
+    case 'ellipse':
+      return intersectEllipse(node, node.width / 2.0, node.height / 2.0, point)
     default:
-      console.log('rect')
       return intersectRect(node, point)
   }
 }
