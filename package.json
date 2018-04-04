@@ -11,7 +11,8 @@
     "d3": "^5.0.0",
     "dagre-layout": "^0.8.8",
     "graphlibrary": "^2.2.0",
-    "jsdom": "^11.7.0"
+    "jsdom": "^11.7.0",
+    "uuid": "^3.2.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

@@ -1,6 +1,8 @@
 import jsdom from 'jsdom'
 import * as d3 from 'd3'
 
+import Rect from './Rect'
+
 const init = () => {
   const { JSDOM } = jsdom
   const jsDom = new JSDOM(`<!DOCTYPE html><html><body></body></html>`)
@@ -24,12 +26,6 @@ const init = () => {
   return { body, svg }
 }
 
-const drawRect = (g, x, y, w, h) => {
-  const clipPath = g.append('defs').append('clipPath').attr('id', `rect-${x}-${y}`)
-  clipPath.append('rect').attr('x', x).attr('y', y).attr('width', w).attr('height', h)
-  g.append('rect').attr('x', x).attr('y', y).attr('width', w).attr('height', h).attr('fill', 'white').attr('stroke', 'black').attr('stroke-width', 2).attr('clip-path', `url(#rect-${x}-${y})`)
-}
-
 // https://stackoverflow.com/a/7273346/862862
 const drawCircle = (g, cx, cy, r) => {
   const clipPath = g.append('defs').append('clipPath').attr('id', `circle-${cx}-${cy}`)
@@ -50,7 +46,7 @@ const drawNode = (g, node) => {
   const h = node.height
   const svg = g.append('svg').attr('x', x).attr('y', y).attr('width', w).attr('height', h)
   if (node.shape === 'rect' || node.shape === undefined) {
-    drawRect(svg, 0, 0, w, h)
+    new Rect(0, 0, w, h).draw(svg)
   } else if (node.shape === 'circle') {
     const r = Math.min(node.width, node.height) / 2.0
     drawCircle(svg, node.width / 2.0, node.height / 2.0, r)
