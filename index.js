@@ -1,9 +1,9 @@
-const dagre = require('dagre-layout').default
-const graphlib = require('graphlibrary')
-const fs = require('fs')
+import dagre from 'dagre-layout'
+import graphlib from 'graphlibrary'
+import fs from 'fs'
 
-const { init, drawNode, drawEdge, intersect } = require('./src/utils')
-const { rectWidth, rectHeight, padding } = require('./src/constants')
+import { init, drawNode, drawEdge, intersect } from './src/utils'
+import { rectWidth, rectHeight, padding } from './src/constants'
 
 // Create a new directed graph
 const graph = new graphlib.Graph({ compound: true })

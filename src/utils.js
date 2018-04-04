@@ -1,5 +1,5 @@
-const jsdom = require('jsdom')
-const d3 = require('d3')
+import jsdom from 'jsdom'
+import * as d3 from 'd3'
 
 const init = () => {
   const { JSDOM } = jsdom
@@ -93,19 +93,19 @@ const intersectCircle = (node, point) => {
 const intersectEllipse = (node, rx, ry, point) => {
   // Formulae from: http://mathworld.wolfram.com/Ellipse-LineIntersection.html
 
-  var cx = node.x
-  var cy = node.y
+  const cx = node.x
+  const cy = node.y
 
-  var px = cx - point.x
-  var py = cy - point.y
+  const px = cx - point.x
+  const py = cy - point.y
 
-  var det = Math.sqrt(rx * rx * py * py + ry * ry * px * px)
+  const det = Math.sqrt(rx * rx * py * py + ry * ry * px * px)
 
-  var dx = Math.abs(rx * ry * px / det)
+  let dx = Math.abs(rx * ry * px / det)
   if (point.x < cx) {
     dx = -dx
   }
-  var dy = Math.abs(rx * ry * py / det)
+  let dy = Math.abs(rx * ry * py / det)
   if (point.y < cy) {
     dy = -dy
   }
@@ -114,17 +114,17 @@ const intersectEllipse = (node, rx, ry, point) => {
 }
 
 const intersectRect = (node, point) => {
-  var x = node.x
-  var y = node.y
+  const x = node.x
+  const y = node.y
 
   // Rectangle intersection algorithm from:
   // http://math.stackexchange.com/questions/108113/find-edge-between-two-boxes
-  var dx = point.x - x
-  var dy = point.y - y
-  var w = node.width / 2
-  var h = node.height / 2
+  const dx = point.x - x
+  const dy = point.y - y
+  let w = node.width / 2
+  let h = node.height / 2
 
-  var sx, sy
+  let sx, sy
   if (Math.abs(dy) * w > Math.abs(dx) * h) {
     // Intersection is top or bottom of rect.
     if (dy < 0) {
