@@ -25,15 +25,22 @@ const init = () => {
 }
 
 const drawRect = (g, x, y, w, h) => {
-  g.append('rect').attr('x', x).attr('y', y).attr('width', w).attr('height', h).attr('fill', 'white').attr('stroke', 'black').attr('stroke-width', 2)
+  const clipPath = g.append('defs').append('clipPath').attr('id', `rect-${x}-${y}`)
+  clipPath.append('rect').attr('x', x).attr('y', y).attr('width', w).attr('height', h)
+  g.append('rect').attr('x', x).attr('y', y).attr('width', w).attr('height', h).attr('fill', 'white').attr('stroke', 'black').attr('stroke-width', 2).attr('clip-path', `url(#rect-${x}-${y})`)
 }
 
+// https://stackoverflow.com/a/7273346/862862
 const drawCircle = (g, cx, cy, r) => {
-  g.append('circle').attr('cx', cx).attr('cy', cy).attr('r', r).attr('fill', 'white').attr('stroke', 'black').attr('stroke-width', 2)
+  const clipPath = g.append('defs').append('clipPath').attr('id', `circle-${cx}-${cy}`)
+  clipPath.append('circle').attr('cx', cx).attr('cy', cy).attr('r', r)
+  g.append('circle').attr('cx', cx).attr('cy', cy).attr('r', r).attr('fill', 'white').attr('stroke', 'black').attr('stroke-width', 2).attr('clip-path', `url(#circle-${cx}-${cy})`)
 }
 
 const drawEllipse = (g, cx, cy, rx, ry) => {
-  g.append('ellipse').attr('cx', cx).attr('cy', cy).attr('rx', rx).attr('ry', ry).attr('fill', 'white').attr('stroke', 'black').attr('stroke-width', 2)
+  const clipPath = g.append('defs').append('clipPath').attr('id', `ellipse-${cx}-${cy}`)
+  clipPath.append('ellipse').attr('cx', cx).attr('cy', cy).attr('rx', rx).attr('ry', ry)
+  g.append('ellipse').attr('cx', cx).attr('cy', cy).attr('rx', rx).attr('ry', ry).attr('fill', 'white').attr('stroke', 'black').attr('stroke-width', 2).attr('clip-path', `url(#ellipse-${cx}-${cy})`)
 }
 
 const drawNode = (g, node) => {
