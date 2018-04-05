@@ -3,6 +3,7 @@ import * as d3 from 'd3'
 
 import Rect from './Rect'
 import Ellipse from './Ellipse'
+import Circle from './Circle'
 
 const init = () => {
   const { JSDOM } = jsdom
@@ -27,13 +28,6 @@ const init = () => {
   return { body, svg }
 }
 
-// https://stackoverflow.com/a/7273346/862862
-const drawCircle = (g, cx, cy, r) => {
-  const clipPath = g.append('defs').append('clipPath').attr('id', `circle-${cx}-${cy}`)
-  clipPath.append('circle').attr('cx', cx).attr('cy', cy).attr('r', r)
-  g.append('circle').attr('cx', cx).attr('cy', cy).attr('r', r).attr('fill', 'white').attr('stroke', 'black').attr('stroke-width', 2).attr('clip-path', `url(#circle-${cx}-${cy})`)
-}
-
 const drawNode = (g, node) => {
   const x = node.x - node.width / 2.0
   const y = node.y - node.height / 2.0
@@ -44,7 +38,7 @@ const drawNode = (g, node) => {
     new Rect(0, 0, w, h).draw(svg)
   } else if (node.shape === 'circle') {
     const r = Math.min(node.width, node.height) / 2.0
-    drawCircle(svg, node.width / 2.0, node.height / 2.0, r)
+    new Circle(node.width / 2.0, node.height / 2.0, r).draw(svg)
   } else if (node.shape === 'ellipse') {
     new Ellipse(node.width / 2.0, node.height / 2.0, node.width / 2.0, node.height / 2.0).draw(svg)
   }
@@ -68,17 +62,12 @@ const drawEdge = (g, points) => {
 const intersect = (node, point) => {
   switch (node.shape) {
     case 'circle':
-      return intersectCircle(node, point)
+      return Circle.intersect(node, Math.min(node.width, node.height) / 2.0, point)
     case 'ellipse':
       return Ellipse.intersect(node, node.width / 2.0, node.height / 2.0, point)
     default:
       return Rect.intersect(node, point)
   }
-}
-
-const intersectCircle = (node, point) => {
-  const r = Math.min(node.width, node.height) / 2.0
-  return Ellipse.intersect(node, r, r, point)
 }
 
 module.exports = {
