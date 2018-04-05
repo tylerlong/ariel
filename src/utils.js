@@ -4,6 +4,7 @@ import * as d3 from 'd3'
 import Rect from './Rect'
 import Ellipse from './Ellipse'
 import Circle from './Circle'
+import Node from './Node'
 
 const init = () => {
   const { JSDOM } = jsdom
@@ -29,22 +30,7 @@ const init = () => {
 }
 
 const drawNode = (g, node) => {
-  const x = node.x - node.width / 2
-  const y = node.y - node.height / 2
-  const w = node.width
-  const h = node.height
-  const svg = g.append('svg').attr('x', x).attr('y', y).attr('width', w).attr('height', h)
-  if (node.shape === 'rect' || node.shape === undefined) {
-    new Rect(0, 0, w, h).draw(svg)
-  } else if (node.shape === 'circle') {
-    const r = Math.min(node.width, node.height) / 2
-    new Circle(node.width / 2, node.height / 2, r).draw(svg)
-  } else if (node.shape === 'ellipse') {
-    new Ellipse(node.width / 2, node.height / 2, node.width / 2, node.height / 2).draw(svg)
-  }
-
-  const text = svg.append('text').attr('x', '50%').attr('y', '50%').attr('fill', 'black').attr('text-anchor', 'middle').attr('dominant-baseline', 'central')
-  text.append('tspan').attr('x', '50%').attr('y', '50%').attr('alignment-baseline', 'central').text(node.label)
+  new Node(node.x, node.y, node.width, node.height, node.shape, node.label).draw(g)
 }
 
 const drawEdge = (g, points) => {
