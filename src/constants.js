@@ -1,9 +1,4 @@
-const rectWidth = 200
-const rectHeight = 120
-const padding = 16
-
-module.exports = {
-  rectWidth,
-  rectHeight,
-  padding
-}
+export const rectWidth = 200
+export const rectHeight = 120
+export const padding = 16
+export const lineHeight = 20

@@ -3,6 +3,7 @@ import * as R from 'ramda'
 import Rect from './Rect'
 import Ellipse from './Ellipse'
 import Circle from './Circle'
+import { lineHeight } from './constants'
 
 class Node {
   constructor (x, y, w, h, shape, label) {
@@ -15,16 +16,13 @@ class Node {
   }
 
   drawLabel (svg) {
-    const lineHeight = 20
     const text = svg.append('text').attr('x', '50%').attr('y', '50%').attr('fill', 'black').attr('text-anchor', 'middle').attr('dominant-baseline', 'central')
     const lines = R.pipe(
       R.split('\n'),
       R.map(R.trim)
     )(this.label)
-    console.log(lines)
     if (lines.length % 2 === 0) { // even lines, for example: 4
       R.forEach(i => {
-        console.log('even', i, lines[i])
         text.append('tspan').attr('x', '50%').attr('dy', i === Math.floor(lines.length / 2) - 1 ? -lineHeight / 2 : -lineHeight).attr('alignment-baseline', 'central').text(lines[i])
       }, R.reverse(R.range(0, Math.floor(lines.length / 2))))
       text.append('tspan').attr('x', '50%').attr('y', '50%').attr('alignment-baseline', 'central').attr('visibility', 'hidden').text('.')
@@ -33,7 +31,6 @@ class Node {
       }, R.range(Math.floor(lines.length / 2), lines.length))
     } else { // odd lines, for example: 5
       R.forEach(i => {
-        console.log('odd', i, lines[i])
         text.append('tspan').attr('x', '50%').attr('dy', -lineHeight).attr('alignment-baseline', 'central').text(lines[i])
       }, R.reverse(R.range(0, Math.floor(lines.length / 2))))
       text.append('tspan').attr('x', '50%').attr('y', '50%').attr('alignment-baseline', 'central').text(lines[Math.floor(lines.length / 2)])

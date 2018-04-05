@@ -6,7 +6,7 @@ import Ellipse from './Ellipse'
 import Circle from './Circle'
 import Node from './Node'
 
-const init = () => {
+export const init = () => {
   const { JSDOM } = jsdom
   const jsDom = new JSDOM(`<!DOCTYPE html><html><body></body></html>`)
   const body = d3.select(jsDom.window.document).select('body')
@@ -29,11 +29,11 @@ const init = () => {
   return { body, svg }
 }
 
-const drawNode = (g, node) => {
+export const drawNode = (g, node) => {
   new Node(node.x, node.y, node.width, node.height, node.shape, node.label).draw(g)
 }
 
-const drawEdge = (g, points) => {
+export const drawEdge = (g, points) => {
   for (let i = 0; i < points.length - 1; i++) {
     const point1 = points[i]
     const point2 = points[i + 1]
@@ -45,7 +45,7 @@ const drawEdge = (g, points) => {
   }
 }
 
-const intersect = (node, point) => {
+export const intersect = (node, point) => {
   switch (node.shape) {
     case 'circle':
       return Circle.intersect(node, Math.min(node.width, node.height) / 2, point)
@@ -54,11 +54,4 @@ const intersect = (node, point) => {
     default:
       return Rect.intersect(node, point)
   }
-}
-
-module.exports = {
-  init,
-  drawNode,
-  drawEdge,
-  intersect
 }
