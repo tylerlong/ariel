@@ -29,18 +29,18 @@ const init = () => {
 }
 
 const drawNode = (g, node) => {
-  const x = node.x - node.width / 2.0
-  const y = node.y - node.height / 2.0
+  const x = node.x - node.width / 2
+  const y = node.y - node.height / 2
   const w = node.width
   const h = node.height
   const svg = g.append('svg').attr('x', x).attr('y', y).attr('width', w).attr('height', h)
   if (node.shape === 'rect' || node.shape === undefined) {
     new Rect(0, 0, w, h).draw(svg)
   } else if (node.shape === 'circle') {
-    const r = Math.min(node.width, node.height) / 2.0
-    new Circle(node.width / 2.0, node.height / 2.0, r).draw(svg)
+    const r = Math.min(node.width, node.height) / 2
+    new Circle(node.width / 2, node.height / 2, r).draw(svg)
   } else if (node.shape === 'ellipse') {
-    new Ellipse(node.width / 2.0, node.height / 2.0, node.width / 2.0, node.height / 2.0).draw(svg)
+    new Ellipse(node.width / 2, node.height / 2, node.width / 2, node.height / 2).draw(svg)
   }
 
   const text = svg.append('text').attr('x', '50%').attr('y', '50%').attr('fill', 'black').attr('text-anchor', 'middle').attr('dominant-baseline', 'central')
@@ -62,9 +62,9 @@ const drawEdge = (g, points) => {
 const intersect = (node, point) => {
   switch (node.shape) {
     case 'circle':
-      return Circle.intersect(node, Math.min(node.width, node.height) / 2.0, point)
+      return Circle.intersect(node, Math.min(node.width, node.height) / 2, point)
     case 'ellipse':
-      return Ellipse.intersect(node, node.width / 2.0, node.height / 2.0, point)
+      return Ellipse.intersect(node, node.width / 2, node.height / 2, point)
     default:
       return Rect.intersect(node, point)
   }

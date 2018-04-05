@@ -63,10 +63,10 @@ let maxY = -1000
 const nodes = graph.nodes().map(n => graph.node(n))
 nodes.sort((a, b) => b.width * b.height - a.width * a.height)
 nodes.forEach(node => {
-  minX = Math.min(minX, node.x - node.width / 2.0)
-  minY = Math.min(minY, node.y - node.height / 2.0)
-  maxX = Math.max(maxX, node.x + node.width / 2.0)
-  maxY = Math.max(maxY, node.y + node.height / 2.0)
+  minX = Math.min(minX, node.x - node.width / 2)
+  minY = Math.min(minY, node.y - node.height / 2)
+  maxX = Math.max(maxX, node.x + node.width / 2)
+  maxY = Math.max(maxY, node.y + node.height / 2)
   drawNode(g, node)
 })
 
