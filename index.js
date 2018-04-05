@@ -27,11 +27,11 @@ graph.setDefaultEdgeLabel(function () { return {} })
 // Add nodes to the graph. The first argument is the node id. The second is
 // metadata about the node. In this case we're going to add labels to each of
 // our nodes.
-graph.setNode('A', { label: 'A', width: rectWidth, height: rectHeight, shape: 'circle' })
+graph.setNode('A', { label: 'A1\nA2\nA3\nA4', width: rectWidth, height: rectHeight, shape: 'circle' })
 graph.setNode('B', { label: 'B', width: rectWidth, height: rectHeight })
 graph.setNode('C', { label: 'C', width: rectWidth, height: rectHeight, shape: 'circle' })
 graph.setNode('Z', { label: 'Z', width: rectWidth, height: rectHeight })
-graph.setNode('Y', { label: 'Y', width: rectWidth, height: rectHeight, shape: 'ellipse' })
+graph.setNode('Y', { label: 'Y1\nY2\nY3\nY4\nY5', width: rectWidth, height: rectHeight, shape: 'ellipse' })
 // graph.setNode('kbacon', { label: 'Kevin Bacon', width: rectWidth, height: rectHeight })
 graph.setNode('group', { label: 'Group' })
 

@@ -12,6 +12,7 @@
     "dagre-layout": "^0.8.8",
     "graphlibrary": "^2.2.0",
     "jsdom": "^11.7.0",
+    "ramda": "^0.25.0",
     "uuid": "^3.2.1"
   },
   "devDependencies": {

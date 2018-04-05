@@ -1,5 +1,5 @@
-const rectWidth = 120
-const rectHeight = 80
+const rectWidth = 200
+const rectHeight = 120
 const padding = 16
 
 module.exports = {

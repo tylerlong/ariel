@@ -2,7 +2,7 @@
 
 <svg width="200" height="200">
   <rect fill="gray" x="0" y="0" width="200" height="200"></rect>
-  <text x="50%" y="50%" fill="black" text-anchor="middle" alignment-baseline="central">
+  <text x="50%" y="50%" fill="black" text-anchor="middle" dominant-baseline="central">
     <tspan x="50%" dy="-10" alignment-baseline="central">bbbb</tspan>
     <tspan x="50%" dy="-20" alignment-baseline="central">aaaa</tspan>
     <tspan x="50%" y="50%" alignment-baseline="central" visibility="hidden">.</tspan>
