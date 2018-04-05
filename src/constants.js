@@ -1,10 +1,8 @@
-const lineHeight = 20
-const rectWidth = 100
-const rectHeight = 50
-const padding = 10
+const rectWidth = 120
+const rectHeight = 80
+const padding = 16
 
 module.exports = {
-  lineHeight,
   rectWidth,
   rectHeight,
   padding
