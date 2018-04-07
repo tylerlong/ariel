@@ -235,43 +235,29 @@ class Label {
     }
   }
 
-  draw7 (svg) {
-    const text = svg.append('text').attr('x', 0).attr('y', '100%').attr('fill', 'black').attr('text-anchor', 'start').attr('dominant-baseline', 'baseline').attr('transform', `translate(${labelPadding}, -${labelPadding})`)
+  draw789 (svg, x, textAnchor, xTranslate) {
+    const text = svg.append('text').attr('x', x).attr('y', '100%').attr('fill', 'black').attr('text-anchor', textAnchor).attr('dominant-baseline', 'baseline').attr('transform', `translate(${xTranslate}, -${labelPadding})`)
     let emptyLineHeight = -lineHeight
     R.forEach(line => {
       if (R.isEmpty(line)) {
         emptyLineHeight += lineHeight
       } else {
-        text.append('tspan').attr('alignment-baseline', 'baseline').attr('x', 0).attr('dy', -lineHeight - emptyLineHeight).text(line)
+        text.append('tspan').attr('alignment-baseline', 'baseline').attr('x', x).attr('dy', -lineHeight - emptyLineHeight).text(line)
         emptyLineHeight = 0
       }
     }, R.reverse(this.lines))
+  }
+
+  draw7 (svg) {
+    this.draw789(svg, 0, 'start', labelPadding)
   }
 
   draw8 (svg) {
-    const text = svg.append('text').attr('x', '50%').attr('y', '100%').attr('fill', 'black').attr('text-anchor', 'middle').attr('dominant-baseline', 'baseline').attr('transform', `translate(0, -${labelPadding})`)
-    let emptyLineHeight = -lineHeight
-    R.forEach(line => {
-      if (R.isEmpty(line)) {
-        emptyLineHeight += lineHeight
-      } else {
-        text.append('tspan').attr('alignment-baseline', 'baseline').attr('x', '50%').attr('dy', -lineHeight - emptyLineHeight).text(line)
-        emptyLineHeight = 0
-      }
-    }, R.reverse(this.lines))
+    this.draw789(svg, '50%', 'middle', 0)
   }
 
   draw9 (svg) {
-    const text = svg.append('text').attr('x', '100%').attr('y', '100%').attr('fill', 'black').attr('text-anchor', 'end').attr('dominant-baseline', 'baseline').attr('transform', `translate(-${labelPadding}, -${labelPadding})`)
-    let emptyLineHeight = -lineHeight
-    R.forEach(line => {
-      if (R.isEmpty(line)) {
-        emptyLineHeight += lineHeight
-      } else {
-        text.append('tspan').attr('alignment-baseline', 'baseline').attr('x', '100%').attr('dy', -lineHeight - emptyLineHeight).text(line)
-        emptyLineHeight = 0
-      }
-    }, R.reverse(this.lines))
+    this.draw789(svg, '100%', 'end', -labelPadding)
   }
 }
 
