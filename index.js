@@ -35,7 +35,7 @@ graph.setNode('Z', { label: 'Z1\n\n\n\nZ5', width: rectWidth, height: rectHeight
 // graph.setNode('Z', { label: 'Z1\nZ2\nZ3\nZ4\nZ5', width: rectWidth, height: rectHeight })
 graph.setNode('Y', { label: 'Y1\n\nY3\n\nY5', width: rectWidth, height: rectHeight, shape: 'ellipse' })
 // graph.setNode('kbacon', { label: 'Kevin Bacon', width: rectWidth, height: rectHeight })
-graph.setNode('group', { label: 'Group' })
+graph.setNode('group', { label: 'Group', labelAlignment: 2 })
 
 // Add edges to the graph.
 graph.setEdge('A', 'B')

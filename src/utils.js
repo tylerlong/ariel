@@ -30,7 +30,7 @@ export const init = () => {
 }
 
 export const drawNode = (g, node) => {
-  new Node(node.x, node.y, node.width, node.height, node.shape, node.label).draw(g)
+  new Node(node.x, node.y, node.width, node.height, node.shape, node.label, node.labelAlignment).draw(g)
 }
 
 export const drawEdge = (g, points) => {

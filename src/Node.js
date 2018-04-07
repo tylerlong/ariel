@@ -4,13 +4,14 @@ import Circle from './Circle'
 import Label from './Label'
 
 class Node {
-  constructor (x, y, w, h, shape, label) {
+  constructor (x, y, w, h, shape, label, labelAlignment) {
     this.x = x
     this.y = y
     this.w = w
     this.h = h
     this.shape = shape
     this.label = label
+    this.labelAlignment = labelAlignment || 5
   }
 
   draw (g) {
@@ -27,7 +28,7 @@ class Node {
     } else if (this.shape === 'ellipse') {
       new Ellipse(this.w / 2, this.h / 2, this.w / 2, this.h / 2).draw(svg)
     }
-    new Label(this.label, 5).draw(svg)
+    new Label(this.label, this.labelAlignment).draw(svg)
   }
 }
 
