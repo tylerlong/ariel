@@ -235,6 +235,19 @@ class Label {
     }
   }
 
+  draw7 (svg) {
+    const text = svg.append('text').attr('x', 0).attr('y', '100%').attr('fill', 'black').attr('text-anchor', 'start').attr('dominant-baseline', 'baseline').attr('transform', `translate(${labelPadding}, -${labelPadding})`)
+    let emptyLineHeight = -lineHeight
+    R.forEach(line => {
+      if (R.isEmpty(line)) {
+        emptyLineHeight += lineHeight
+      } else {
+        text.append('tspan').attr('alignment-baseline', 'baseline').attr('x', 0).attr('dy', -lineHeight - emptyLineHeight).text(line)
+        emptyLineHeight = 0
+      }
+    }, R.reverse(this.lines))
+  }
+
   draw8 (svg) {
     const text = svg.append('text').attr('x', '50%').attr('y', '100%').attr('fill', 'black').attr('text-anchor', 'middle').attr('dominant-baseline', 'baseline').attr('transform', `translate(0, -${labelPadding})`)
     let emptyLineHeight = -lineHeight
