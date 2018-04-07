@@ -1,18 +1,20 @@
 import uuid from 'uuid/v1'
 
 class Rect {
-  constructor (x, y, w, h) {
+  constructor (x, y, w, h, fill = 'white', strokeWidth = 2) {
     this.x = x
     this.y = y
     this.w = w
     this.h = h
+    this.fill = fill
+    this.strokeWidth = strokeWidth
   }
 
   draw (g) {
     const id = uuid()
     const clipPath = g.append('defs').append('clipPath').attr('id', `rect-${id}`) // https://stackoverflow.com/a/7273346/862862
     clipPath.append('rect').attr('x', this.x).attr('y', this.y).attr('width', this.w).attr('height', this.h)
-    g.append('rect').attr('x', this.x).attr('y', this.y).attr('width', this.w).attr('height', this.h).attr('fill', 'white').attr('stroke', 'black').attr('stroke-width', 2).attr('clip-path', `url(#rect-${id})`)
+    g.append('rect').attr('x', this.x).attr('y', this.y).attr('width', this.w).attr('height', this.h).attr('fill', this.fill).attr('stroke', 'black').attr('stroke-width', this.strokeWidth).attr('clip-path', `url(#rect-${id})`)
   }
 
   static intersect (node, point) {

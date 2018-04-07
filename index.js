@@ -38,13 +38,13 @@ graph.setNode('Y', { label: 'Y1\n\nY3\n\nY5', width: rectWidth, height: rectHeig
 graph.setNode('group', { label: 'Group', labelAlignment: 2 })
 
 // Add edges to the graph.
-graph.setEdge('A', 'B', { label: 'Hello world', width: 120, height: 60, labelpos: 'c' })
-graph.setEdge('A', 'C', { label: 'Hello world', width: 120, height: 60, labelpos: 'c' })
-graph.setEdge('A', 'Z', { label: 'Hello world', width: 120, height: 60, labelpos: 'c' })
-graph.setEdge('A', 'Y', { label: 'Hello world', width: 120, height: 60, labelpos: 'c' })
-graph.setEdge('B', 'Y', { label: 'Hello world', width: 120, height: 60, labelpos: 'c' })
-graph.setEdge('Z', 'Y', { label: 'Hello world', width: 120, height: 60, labelpos: 'c' })
-graph.setEdge('Y', 'A', { label: 'Hello world', width: 120, height: 60, labelpos: 'c' })
+graph.setEdge('A', 'B', { label: 'Hello world', width: 100, height: 24, labelpos: 'c' })
+graph.setEdge('A', 'C', { label: 'Hello world', width: 100, height: 24, labelpos: 'c' })
+graph.setEdge('A', 'Z', { label: 'Hello world', width: 100, height: 24, labelpos: 'c' })
+graph.setEdge('A', 'Y', { label: 'Hello world', width: 100, height: 24, labelpos: 'c' })
+graph.setEdge('B', 'Y', { label: 'Hello world', width: 100, height: 24, labelpos: 'c' })
+graph.setEdge('Z', 'Y', { label: 'Hello world', width: 100, height: 24, labelpos: 'c' })
+graph.setEdge('Y', 'A', { label: 'Hello world', width: 100, height: 24, labelpos: 'c' })
 
 graph.setParent('A', 'group')
 graph.setParent('B', 'group')

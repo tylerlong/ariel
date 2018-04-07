@@ -48,6 +48,7 @@ export const drawEdge = (g, points) => {
 
 export const drawEdgeLabel = (g, x, y, w, h, label) => {
   const svg = g.append('svg').attr('x', x - w / 2).attr('y', y - h / 2).attr('width', w).attr('height', h)
+  new Rect(0, 0, w, h, '#ddd', 0).draw(svg)
   new Label(label, 5).draw(svg)
 }
 
