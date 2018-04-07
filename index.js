@@ -33,7 +33,7 @@ graph.setNode('B', { label: 'B1\n\nB3\nB4', width: rectWidth, height: rectHeight
 graph.setNode('C', { label: 'C1\nC2\n\nC4', width: rectWidth, height: rectHeight, shape: 'circle' })
 graph.setNode('Z', { label: 'Z1\n\n\n\nZ5', width: rectWidth, height: rectHeight })
 // graph.setNode('Z', { label: 'Z1\nZ2\nZ3\nZ4\nZ5', width: rectWidth, height: rectHeight })
-graph.setNode('Y', { label: 'Y1\nY2\nY3\nY4\nY5', width: rectWidth, height: rectHeight, shape: 'ellipse' })
+graph.setNode('Y', { label: 'Y1\n\nY3\n\nY5', width: rectWidth, height: rectHeight, shape: 'ellipse' })
 // graph.setNode('kbacon', { label: 'Kevin Bacon', width: rectWidth, height: rectHeight })
 graph.setNode('group', { label: 'Group' })
 

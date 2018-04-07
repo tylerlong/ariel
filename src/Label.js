@@ -68,66 +68,47 @@ class Label {
 
   draw456 (svg, x, textAnchor, translateX) {
     const text = svg.append('text').attr('x', x).attr('y', '50%').attr('fill', 'black').attr('text-anchor', textAnchor).attr('dominant-baseline', 'central').attr('transform', `translate(${translateX}, 0)`)
-    const lines = this.lines
-    if (lines.length % 2 === 0) { // even lines, for example: 4
-      let emptyLineHeight = -lineHeight / 2
-      R.pipe(
-        R.slice(0, Math.floor(lines.length / 2)),
-        R.reverse,
-        R.forEach(line => {
-          if (R.isEmpty(line)) {
-            emptyLineHeight += lineHeight
-          } else {
-            text.append('tspan').attr('x', x).attr('dy', -lineHeight - emptyLineHeight).attr('alignment-baseline', 'central').text(line)
-            emptyLineHeight = 0
-          }
-        })
-      )(lines)
+    if (this.lines.length % 2 === 0) { // even lines, for example: 4
+      const drawLines = (rangeSelector, dyMultiplier) => {
+        let emptyLineHeight = -lineHeight / 2
+        R.pipe(
+          rangeSelector,
+          R.forEach(line => {
+            if (R.isEmpty(line)) {
+              emptyLineHeight += lineHeight
+            } else {
+              text.append('tspan').attr('x', x).attr('dy', (lineHeight + emptyLineHeight) * dyMultiplier).attr('alignment-baseline', 'central').text(line)
+              emptyLineHeight = 0
+            }
+          })
+        )(this.lines)
+      }
+      drawLines(R.pipe(R.slice(0, Math.floor(this.lines.length / 2)), R.reverse), -1)
       text.append('tspan').attr('x', x).attr('y', '50%').attr('alignment-baseline', 'central').attr('visibility', 'hidden').text('.')
-      emptyLineHeight = -lineHeight / 2
-      R.pipe(
-        R.slice(Math.floor(lines.length / 2), lines.length),
-        R.forEach(line => {
-          if (R.isEmpty(line)) {
-            emptyLineHeight += lineHeight
-          } else {
-            text.append('tspan').attr('x', x).attr('dy', lineHeight + emptyLineHeight).attr('alignment-baseline', 'central').text(line)
-            emptyLineHeight = 0
-          }
-        })
-      )(lines)
+      drawLines(R.slice(Math.floor(this.lines.length / 2), this.lines.length), 1)
     } else { // odd lines, for example: 5
-      let emptyLineHeight = 0
-      R.pipe(
-        R.slice(0, Math.floor(lines.length / 2)),
-        R.reverse,
-        R.forEach(line => {
-          if (R.isEmpty(line)) {
-            emptyLineHeight += lineHeight
-          } else {
-            text.append('tspan').attr('x', x).attr('dy', -lineHeight - emptyLineHeight).attr('alignment-baseline', 'central').text(line)
-            emptyLineHeight = 0
-          }
-        })
-      )(lines)
-      const middleLine = R.nth(Math.floor(lines.length / 2), lines)
+      const drawLines = (rangeSelector, dyMultiplier) => {
+        let emptyLineHeight = 0
+        R.pipe(
+          rangeSelector,
+          R.forEach(line => {
+            if (R.isEmpty(line)) {
+              emptyLineHeight += lineHeight
+            } else {
+              text.append('tspan').attr('x', x).attr('dy', (lineHeight + emptyLineHeight) * dyMultiplier).attr('alignment-baseline', 'central').text(line)
+              emptyLineHeight = 0
+            }
+          })
+        )(this.lines)
+      }
+      drawLines(R.pipe(R.slice(0, Math.floor(this.lines.length / 2)), R.reverse), -1)
+      const middleLine = R.nth(Math.floor(this.lines.length / 2), this.lines)
       if (R.isEmpty(middleLine)) {
         text.append('tspan').attr('x', x).attr('y', '50%').attr('alignment-baseline', 'central').attr('visibility', 'hidden').text('.')
       } else {
         text.append('tspan').attr('x', x).attr('y', '50%').attr('alignment-baseline', 'central').text(middleLine)
       }
-      emptyLineHeight = 0
-      R.pipe(
-        R.slice(Math.floor(lines.length / 2) + 1, lines.length),
-        R.forEach(line => {
-          if (R.isEmpty(line)) {
-            emptyLineHeight += lineHeight
-          } else {
-            text.append('tspan').attr('x', x).attr('dy', lineHeight + emptyLineHeight).attr('alignment-baseline', 'central').text(line)
-            emptyLineHeight = 0
-          }
-        })
-      )(lines)
+      drawLines(R.slice(Math.floor(this.lines.length / 2) + 1, this.lines.length), 1)
     }
   }
 
