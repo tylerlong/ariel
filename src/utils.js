@@ -5,6 +5,7 @@ import Rect from './Rect'
 import Ellipse from './Ellipse'
 import Circle from './Circle'
 import Node from './Node'
+import Label from './Label'
 
 export const init = () => {
   const { JSDOM } = jsdom
@@ -43,6 +44,11 @@ export const drawEdge = (g, points) => {
       line.attr('marker-end', 'url(#arrowhead)')
     }
   }
+}
+
+export const drawEdgeLabel = (g, x, y, w, h, label) => {
+  const svg = g.append('svg').attr('x', x - w / 2).attr('y', y - h / 2).attr('width', w).attr('height', h)
+  new Label(label, 5).draw(svg)
 }
 
 export const intersect = (node, point) => {

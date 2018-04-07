@@ -2,7 +2,7 @@ import dagre from 'dagre-layout'
 import graphlib from 'graphlibrary'
 import fs from 'fs'
 
-import { init, drawNode, drawEdge, intersect } from './src/utils'
+import { init, drawNode, drawEdge, drawEdgeLabel, intersect } from './src/utils'
 import { rectWidth, rectHeight, padding } from './src/constants'
 
 // Create a new directed graph
@@ -38,13 +38,13 @@ graph.setNode('Y', { label: 'Y1\n\nY3\n\nY5', width: rectWidth, height: rectHeig
 graph.setNode('group', { label: 'Group', labelAlignment: 2 })
 
 // Add edges to the graph.
-graph.setEdge('A', 'B')
-graph.setEdge('A', 'C')
-graph.setEdge('A', 'Z')
-graph.setEdge('A', 'Y')
-graph.setEdge('B', 'Y')
-graph.setEdge('Z', 'Y')
-graph.setEdge('Y', 'A')
+graph.setEdge('A', 'B', { label: 'Hello world', width: 120, height: 60, labelpos: 'c' })
+graph.setEdge('A', 'C', { label: 'Hello world', width: 120, height: 60, labelpos: 'c' })
+graph.setEdge('A', 'Z', { label: 'Hello world', width: 120, height: 60, labelpos: 'c' })
+graph.setEdge('A', 'Y', { label: 'Hello world', width: 120, height: 60, labelpos: 'c' })
+graph.setEdge('B', 'Y', { label: 'Hello world', width: 120, height: 60, labelpos: 'c' })
+graph.setEdge('Z', 'Y', { label: 'Hello world', width: 120, height: 60, labelpos: 'c' })
+graph.setEdge('Y', 'A', { label: 'Hello world', width: 120, height: 60, labelpos: 'c' })
 
 graph.setParent('A', 'group')
 graph.setParent('B', 'group')
@@ -88,6 +88,9 @@ graph.edges().forEach(e => {
     maxY = Math.max(maxY, point.y)
   }
   drawEdge(g, points)
+  if (edge.label !== undefined) {
+    drawEdgeLabel(g, edge.x, edge.y, edge.width, edge.height, edge.label)
+  }
 })
 
 svg.attr('width', maxX - minX + padding * 2).attr('height', maxY - minY + padding * 2)
