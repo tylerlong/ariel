@@ -37,43 +37,33 @@ class Label {
     )(this.label)
   }
 
-  draw1 (svg) {
-    const text = svg.append('text').attr('x', 0).attr('y', 0).attr('fill', 'black').attr('text-anchor', 'start').attr('dominant-baseline', 'hanging').attr('transform', `translate(${labelPadding}, ${labelPadding})`)
+  draw123789 (svg, x, y, textAnchor, baseline, translateX, translateY, dyMultiplier, linesOrder) {
+    const text = svg.append('text').attr('x', x).attr('y', y).attr('fill', 'black').attr('text-anchor', textAnchor).attr('dominant-baseline', baseline).attr('transform', `translate(${translateX}, ${translateY})`)
     let emptyLineHeight = -lineHeight
     R.forEach(line => {
       if (R.isEmpty(line)) {
         emptyLineHeight += lineHeight
       } else {
-        text.append('tspan').attr('alignment-baseline', 'hanging').attr('x', 0).attr('dy', lineHeight + emptyLineHeight).text(line)
+        text.append('tspan').attr('alignment-baseline', baseline).attr('x', x).attr('dy', (lineHeight + emptyLineHeight) * dyMultiplier).text(line)
         emptyLineHeight = 0
       }
-    }, this.lines)
+    }, linesOrder(this.lines))
+  }
+
+  draw123 (svg, x, textAnchor, translateX) {
+    this.draw123789(svg, x, 0, textAnchor, 'hanging', translateX, labelPadding, 1, R.identity)
+  }
+
+  draw1 (svg) {
+    this.draw123(svg, 0, 'start', labelPadding)
   }
 
   draw2 (svg) {
-    const text = svg.append('text').attr('x', '50%').attr('y', 0).attr('fill', 'black').attr('text-anchor', 'middle').attr('dominant-baseline', 'hanging').attr('transform', `translate(0, ${labelPadding})`)
-    let emptyLineHeight = -lineHeight
-    R.forEach(line => {
-      if (R.isEmpty(line)) {
-        emptyLineHeight += lineHeight
-      } else {
-        text.append('tspan').attr('alignment-baseline', 'hanging').attr('x', '50%').attr('dy', lineHeight + emptyLineHeight).text(line)
-        emptyLineHeight = 0
-      }
-    }, this.lines)
+    this.draw123(svg, '50%', 'middle', 0)
   }
 
   draw3 (svg) {
-    const text = svg.append('text').attr('x', '100%').attr('y', 0).attr('fill', 'black').attr('text-anchor', 'end').attr('dominant-baseline', 'hanging').attr('transform', `translate(-${labelPadding}, ${labelPadding})`)
-    let emptyLineHeight = -lineHeight
-    R.forEach(line => {
-      if (R.isEmpty(line)) {
-        emptyLineHeight += lineHeight
-      } else {
-        text.append('tspan').attr('alignment-baseline', 'hanging').attr('x', '100%').attr('dy', lineHeight + emptyLineHeight).text(line)
-        emptyLineHeight = 0
-      }
-    }, this.lines)
+    this.draw123(svg, '100%', 'end', -labelPadding)
   }
 
   draw4 (svg) {
@@ -235,17 +225,8 @@ class Label {
     }
   }
 
-  draw789 (svg, x, textAnchor, xTranslate) {
-    const text = svg.append('text').attr('x', x).attr('y', '100%').attr('fill', 'black').attr('text-anchor', textAnchor).attr('dominant-baseline', 'baseline').attr('transform', `translate(${xTranslate}, -${labelPadding})`)
-    let emptyLineHeight = -lineHeight
-    R.forEach(line => {
-      if (R.isEmpty(line)) {
-        emptyLineHeight += lineHeight
-      } else {
-        text.append('tspan').attr('alignment-baseline', 'baseline').attr('x', x).attr('dy', -lineHeight - emptyLineHeight).text(line)
-        emptyLineHeight = 0
-      }
-    }, R.reverse(this.lines))
+  draw789 (svg, x, textAnchor, translateX) {
+    this.draw123789(svg, x, '100%', textAnchor, 'baseline', translateX, -labelPadding, -1, R.reverse)
   }
 
   draw7 (svg) {
