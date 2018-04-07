@@ -1,3 +1,21 @@
+/*
+Alignment:
+
+1 2 3
+4 5 6
+7 8 9
+
+1: left top
+2: top middle
+3: right top
+4: left middle
+5: middle middle
+6: right middle
+7: left bottom
+8: middle bottom
+9: right bottom
+*/
+
 import * as R from 'ramda'
 
 import { lineHeight } from './constants'
