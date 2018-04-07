@@ -260,6 +260,19 @@ class Label {
       }
     }, R.reverse(this.lines))
   }
+
+  draw9 (svg) {
+    const text = svg.append('text').attr('x', '100%').attr('y', '100%').attr('fill', 'black').attr('text-anchor', 'end').attr('dominant-baseline', 'baseline').attr('transform', `translate(-${labelPadding}, -${labelPadding})`)
+    let emptyLineHeight = -lineHeight
+    R.forEach(line => {
+      if (R.isEmpty(line)) {
+        emptyLineHeight += lineHeight
+      } else {
+        text.append('tspan').attr('alignment-baseline', 'baseline').attr('x', '100%').attr('dy', -lineHeight - emptyLineHeight).text(line)
+        emptyLineHeight = 0
+      }
+    }, R.reverse(this.lines))
+  }
 }
 
 export default Label
