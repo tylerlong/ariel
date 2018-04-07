@@ -6,7 +6,7 @@ Alignment:
 7 8 9
 
 1: left top
-2: top middle
+2: middle top
 3: right top
 4: left middle
 5: middle middle
@@ -71,48 +71,63 @@ class Label {
     const lines = this.lines
     if (lines.length % 2 === 0) { // even lines, for example: 4
       let emptyLineHeight = -lineHeight / 2
-      R.forEach(i => {
-        if (R.isEmpty(lines[i])) {
-          emptyLineHeight += lineHeight
-        } else {
-          text.append('tspan').attr('x', x).attr('dy', -lineHeight - emptyLineHeight).attr('alignment-baseline', 'central').text(lines[i])
-          emptyLineHeight = 0
-        }
-      }, R.reverse(R.range(0, Math.floor(lines.length / 2))))
+      R.pipe(
+        R.slice(0, Math.floor(lines.length / 2)),
+        R.reverse,
+        R.forEach(line => {
+          if (R.isEmpty(line)) {
+            emptyLineHeight += lineHeight
+          } else {
+            text.append('tspan').attr('x', x).attr('dy', -lineHeight - emptyLineHeight).attr('alignment-baseline', 'central').text(line)
+            emptyLineHeight = 0
+          }
+        })
+      )(lines)
       text.append('tspan').attr('x', x).attr('y', '50%').attr('alignment-baseline', 'central').attr('visibility', 'hidden').text('.')
       emptyLineHeight = -lineHeight / 2
-      R.forEach(i => {
-        if (R.isEmpty(lines[i])) {
-          emptyLineHeight += lineHeight
-        } else {
-          text.append('tspan').attr('x', x).attr('dy', lineHeight + emptyLineHeight).attr('alignment-baseline', 'central').text(lines[i])
-          emptyLineHeight = 0
-        }
-      }, R.range(Math.floor(lines.length / 2), lines.length))
+      R.pipe(
+        R.slice(Math.floor(lines.length / 2), lines.length),
+        R.forEach(line => {
+          if (R.isEmpty(line)) {
+            emptyLineHeight += lineHeight
+          } else {
+            text.append('tspan').attr('x', x).attr('dy', lineHeight + emptyLineHeight).attr('alignment-baseline', 'central').text(line)
+            emptyLineHeight = 0
+          }
+        })
+      )(lines)
     } else { // odd lines, for example: 5
       let emptyLineHeight = 0
-      R.forEach(i => {
-        if (R.isEmpty(lines[i])) {
-          emptyLineHeight += lineHeight
-        } else {
-          text.append('tspan').attr('x', x).attr('dy', -lineHeight - emptyLineHeight).attr('alignment-baseline', 'central').text(lines[i])
-          emptyLineHeight = 0
-        }
-      }, R.reverse(R.range(0, Math.floor(lines.length / 2))))
-      if (R.isEmpty(lines[Math.floor(lines.length / 2)])) {
+      R.pipe(
+        R.slice(0, Math.floor(lines.length / 2)),
+        R.reverse,
+        R.forEach(line => {
+          if (R.isEmpty(line)) {
+            emptyLineHeight += lineHeight
+          } else {
+            text.append('tspan').attr('x', x).attr('dy', -lineHeight - emptyLineHeight).attr('alignment-baseline', 'central').text(line)
+            emptyLineHeight = 0
+          }
+        })
+      )(lines)
+      const middleLine = R.nth(Math.floor(lines.length / 2), lines)
+      if (R.isEmpty(middleLine)) {
         text.append('tspan').attr('x', x).attr('y', '50%').attr('alignment-baseline', 'central').attr('visibility', 'hidden').text('.')
       } else {
-        text.append('tspan').attr('x', x).attr('y', '50%').attr('alignment-baseline', 'central').text(lines[Math.floor(lines.length / 2)])
+        text.append('tspan').attr('x', x).attr('y', '50%').attr('alignment-baseline', 'central').text(middleLine)
       }
       emptyLineHeight = 0
-      R.forEach(i => {
-        if (R.isEmpty(lines[i])) {
-          emptyLineHeight += lineHeight
-        } else {
-          text.append('tspan').attr('x', x).attr('dy', lineHeight + emptyLineHeight).attr('alignment-baseline', 'central').text(lines[i])
-          emptyLineHeight = 0
-        }
-      }, R.range(Math.floor(lines.length / 2) + 1, lines.length))
+      R.pipe(
+        R.slice(Math.floor(lines.length / 2) + 1, lines.length),
+        R.forEach(line => {
+          if (R.isEmpty(line)) {
+            emptyLineHeight += lineHeight
+          } else {
+            text.append('tspan').attr('x', x).attr('dy', lineHeight + emptyLineHeight).attr('alignment-baseline', 'central').text(line)
+            emptyLineHeight = 0
+          }
+        })
+      )(lines)
     }
   }
 
