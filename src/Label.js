@@ -66,29 +66,26 @@ class Label {
     this.draw123(svg, '100%', 'end', -labelPadding)
   }
 
-  draw4 (svg) {
-    const text = svg.append('text').attr('x', 0).attr('y', '50%').attr('fill', 'black').attr('text-anchor', 'start').attr('dominant-baseline', 'central').attr('transform', `translate(${labelPadding}, 0)`)
-    const lines = R.pipe(
-      R.split('\n'),
-      R.map(R.trim)
-    )(this.label)
+  draw456 (svg, x, textAnchor, translateX) {
+    const text = svg.append('text').attr('x', x).attr('y', '50%').attr('fill', 'black').attr('text-anchor', textAnchor).attr('dominant-baseline', 'central').attr('transform', `translate(${translateX}, 0)`)
+    const lines = this.lines
     if (lines.length % 2 === 0) { // even lines, for example: 4
       let emptyLineHeight = -lineHeight / 2
       R.forEach(i => {
         if (R.isEmpty(lines[i])) {
           emptyLineHeight += lineHeight
         } else {
-          text.append('tspan').attr('x', 0).attr('dy', -lineHeight - emptyLineHeight).attr('alignment-baseline', 'central').text(lines[i])
+          text.append('tspan').attr('x', x).attr('dy', -lineHeight - emptyLineHeight).attr('alignment-baseline', 'central').text(lines[i])
           emptyLineHeight = 0
         }
       }, R.reverse(R.range(0, Math.floor(lines.length / 2))))
-      text.append('tspan').attr('x', 0).attr('y', '50%').attr('alignment-baseline', 'central').attr('visibility', 'hidden').text('.')
+      text.append('tspan').attr('x', x).attr('y', '50%').attr('alignment-baseline', 'central').attr('visibility', 'hidden').text('.')
       emptyLineHeight = -lineHeight / 2
       R.forEach(i => {
         if (R.isEmpty(lines[i])) {
           emptyLineHeight += lineHeight
         } else {
-          text.append('tspan').attr('x', 0).attr('dy', lineHeight + emptyLineHeight).attr('alignment-baseline', 'central').text(lines[i])
+          text.append('tspan').attr('x', x).attr('dy', lineHeight + emptyLineHeight).attr('alignment-baseline', 'central').text(lines[i])
           emptyLineHeight = 0
         }
       }, R.range(Math.floor(lines.length / 2), lines.length))
@@ -98,131 +95,37 @@ class Label {
         if (R.isEmpty(lines[i])) {
           emptyLineHeight += lineHeight
         } else {
-          text.append('tspan').attr('x', 0).attr('dy', -lineHeight - emptyLineHeight).attr('alignment-baseline', 'central').text(lines[i])
+          text.append('tspan').attr('x', x).attr('dy', -lineHeight - emptyLineHeight).attr('alignment-baseline', 'central').text(lines[i])
           emptyLineHeight = 0
         }
       }, R.reverse(R.range(0, Math.floor(lines.length / 2))))
       if (R.isEmpty(lines[Math.floor(lines.length / 2)])) {
-        text.append('tspan').attr('x', 0).attr('y', '50%').attr('alignment-baseline', 'central').attr('visibility', 'hidden').text('.')
+        text.append('tspan').attr('x', x).attr('y', '50%').attr('alignment-baseline', 'central').attr('visibility', 'hidden').text('.')
       } else {
-        text.append('tspan').attr('x', 0).attr('y', '50%').attr('alignment-baseline', 'central').text(lines[Math.floor(lines.length / 2)])
+        text.append('tspan').attr('x', x).attr('y', '50%').attr('alignment-baseline', 'central').text(lines[Math.floor(lines.length / 2)])
       }
       emptyLineHeight = 0
       R.forEach(i => {
         if (R.isEmpty(lines[i])) {
           emptyLineHeight += lineHeight
         } else {
-          text.append('tspan').attr('x', 0).attr('dy', lineHeight + emptyLineHeight).attr('alignment-baseline', 'central').text(lines[i])
+          text.append('tspan').attr('x', x).attr('dy', lineHeight + emptyLineHeight).attr('alignment-baseline', 'central').text(lines[i])
           emptyLineHeight = 0
         }
       }, R.range(Math.floor(lines.length / 2) + 1, lines.length))
     }
+  }
+
+  draw4 (svg) {
+    this.draw456(svg, 0, 'start', labelPadding)
   }
 
   draw5 (svg) {
-    const text = svg.append('text').attr('x', '50%').attr('y', '50%').attr('fill', 'black').attr('text-anchor', 'middle').attr('dominant-baseline', 'central')
-    const lines = R.pipe(
-      R.split('\n'),
-      R.map(R.trim)
-    )(this.label)
-    if (lines.length % 2 === 0) { // even lines, for example: 4
-      let emptyLineHeight = -lineHeight / 2
-      R.forEach(i => {
-        if (R.isEmpty(lines[i])) {
-          emptyLineHeight += lineHeight
-        } else {
-          text.append('tspan').attr('x', '50%').attr('dy', -lineHeight - emptyLineHeight).attr('alignment-baseline', 'central').text(lines[i])
-          emptyLineHeight = 0
-        }
-      }, R.reverse(R.range(0, Math.floor(lines.length / 2))))
-      text.append('tspan').attr('x', '50%').attr('y', '50%').attr('alignment-baseline', 'central').attr('visibility', 'hidden').text('.')
-      emptyLineHeight = -lineHeight / 2
-      R.forEach(i => {
-        if (R.isEmpty(lines[i])) {
-          emptyLineHeight += lineHeight
-        } else {
-          text.append('tspan').attr('x', '50%').attr('dy', lineHeight + emptyLineHeight).attr('alignment-baseline', 'central').text(lines[i])
-          emptyLineHeight = 0
-        }
-      }, R.range(Math.floor(lines.length / 2), lines.length))
-    } else { // odd lines, for example: 5
-      let emptyLineHeight = 0
-      R.forEach(i => {
-        if (R.isEmpty(lines[i])) {
-          emptyLineHeight += lineHeight
-        } else {
-          text.append('tspan').attr('x', '50%').attr('dy', -lineHeight - emptyLineHeight).attr('alignment-baseline', 'central').text(lines[i])
-          emptyLineHeight = 0
-        }
-      }, R.reverse(R.range(0, Math.floor(lines.length / 2))))
-      if (R.isEmpty(lines[Math.floor(lines.length / 2)])) {
-        text.append('tspan').attr('x', '50%').attr('y', '50%').attr('alignment-baseline', 'central').attr('visibility', 'hidden').text('.')
-      } else {
-        text.append('tspan').attr('x', '50%').attr('y', '50%').attr('alignment-baseline', 'central').text(lines[Math.floor(lines.length / 2)])
-      }
-      emptyLineHeight = 0
-      R.forEach(i => {
-        if (R.isEmpty(lines[i])) {
-          emptyLineHeight += lineHeight
-        } else {
-          text.append('tspan').attr('x', '50%').attr('dy', lineHeight + emptyLineHeight).attr('alignment-baseline', 'central').text(lines[i])
-          emptyLineHeight = 0
-        }
-      }, R.range(Math.floor(lines.length / 2) + 1, lines.length))
-    }
+    this.draw456(svg, '50%', 'middle', 0)
   }
 
   draw6 (svg) {
-    const text = svg.append('text').attr('x', '100%').attr('y', '50%').attr('fill', 'black').attr('text-anchor', 'end').attr('dominant-baseline', 'central').attr('transform', `translate(-${labelPadding}, 0)`)
-    const lines = R.pipe(
-      R.split('\n'),
-      R.map(R.trim)
-    )(this.label)
-    if (lines.length % 2 === 0) { // even lines, for example: 4
-      let emptyLineHeight = -lineHeight / 2
-      R.forEach(i => {
-        if (R.isEmpty(lines[i])) {
-          emptyLineHeight += lineHeight
-        } else {
-          text.append('tspan').attr('x', '100%').attr('dy', -lineHeight - emptyLineHeight).attr('alignment-baseline', 'central').text(lines[i])
-          emptyLineHeight = 0
-        }
-      }, R.reverse(R.range(0, Math.floor(lines.length / 2))))
-      text.append('tspan').attr('x', '100%').attr('y', '50%').attr('alignment-baseline', 'central').attr('visibility', 'hidden').text('.')
-      emptyLineHeight = -lineHeight / 2
-      R.forEach(i => {
-        if (R.isEmpty(lines[i])) {
-          emptyLineHeight += lineHeight
-        } else {
-          text.append('tspan').attr('x', '100%').attr('dy', lineHeight + emptyLineHeight).attr('alignment-baseline', 'central').text(lines[i])
-          emptyLineHeight = 0
-        }
-      }, R.range(Math.floor(lines.length / 2), lines.length))
-    } else { // odd lines, for example: 5
-      let emptyLineHeight = 0
-      R.forEach(i => {
-        if (R.isEmpty(lines[i])) {
-          emptyLineHeight += lineHeight
-        } else {
-          text.append('tspan').attr('x', '100%').attr('dy', -lineHeight - emptyLineHeight).attr('alignment-baseline', 'central').text(lines[i])
-          emptyLineHeight = 0
-        }
-      }, R.reverse(R.range(0, Math.floor(lines.length / 2))))
-      if (R.isEmpty(lines[Math.floor(lines.length / 2)])) {
-        text.append('tspan').attr('x', '100%').attr('y', '50%').attr('alignment-baseline', 'central').attr('visibility', 'hidden').text('.')
-      } else {
-        text.append('tspan').attr('x', '100%').attr('y', '50%').attr('alignment-baseline', 'central').text(lines[Math.floor(lines.length / 2)])
-      }
-      emptyLineHeight = 0
-      R.forEach(i => {
-        if (R.isEmpty(lines[i])) {
-          emptyLineHeight += lineHeight
-        } else {
-          text.append('tspan').attr('x', '100%').attr('dy', lineHeight + emptyLineHeight).attr('alignment-baseline', 'central').text(lines[i])
-          emptyLineHeight = 0
-        }
-      }, R.range(Math.floor(lines.length / 2) + 1, lines.length))
-    }
+    this.draw456(svg, '100%', 'end', -labelPadding)
   }
 
   draw789 (svg, x, textAnchor, translateX) {
