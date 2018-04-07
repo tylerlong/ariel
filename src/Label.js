@@ -50,6 +50,19 @@ class Label {
     }, this.lines)
   }
 
+  draw3 (svg) {
+    const text = svg.append('text').attr('x', '100%').attr('y', 0).attr('fill', 'black').attr('text-anchor', 'end').attr('dominant-baseline', 'hanging').attr('transform', `translate(-${labelPadding}, ${labelPadding})`)
+    let emptyLineHeight = -lineHeight
+    R.forEach(line => {
+      if (R.isEmpty(line)) {
+        emptyLineHeight += lineHeight
+      } else {
+        text.append('tspan').attr('alignment-baseline', 'hanging').attr('x', '100%').attr('dy', lineHeight + emptyLineHeight).text(line)
+        emptyLineHeight = 0
+      }
+    }, this.lines)
+  }
+
   draw4 (svg) {
     const text = svg.append('text').attr('x', 0).attr('y', '50%').attr('fill', 'black').attr('text-anchor', 'start').attr('dominant-baseline', 'central').attr('transform', `translate(${labelPadding}, 0)`)
     const lines = R.pipe(
