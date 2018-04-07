@@ -27,7 +27,7 @@ class Node {
     } else if (this.shape === 'ellipse') {
       new Ellipse(this.w / 2, this.h / 2, this.w / 2, this.h / 2).draw(svg)
     }
-    new Label(this.label, 3).draw(svg)
+    new Label(this.label, 2).draw(svg)
   }
 }
 
